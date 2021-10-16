@@ -1,0 +1,14 @@
+body {
+  background-color: #000;
+  color: #fff;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  perspective: 500px;
+  perspective-origin: 50% calc(50% - 150px);
+}
+
+.scene {
+  position: absolute;
+  transform-style: preserve-3d;
+}
