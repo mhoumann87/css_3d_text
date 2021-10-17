@@ -1,6 +1,7 @@
 body {
   background-color: #000;
   color: #fff;
+  font-family: sans-serif;
   min-height: 100vh;
   display: grid;
   place-items: center;
@@ -9,6 +10,67 @@ body {
 }
 
 .scene {
-  position: absolute;
+  position: relative;
   transform-style: preserve-3d;
+}
+
+.banner {
+  display: flex;
+  transform-style: preserve-3d;
+  animation: rotate 24s infinite linear;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotateY(-360deg);
+  }
+}
+
+$width: 50px;
+.panel {
+  position: absolute;
+  transform: translate(-50%, -50%) rotateY(var(--angle)) translateZ(190px);
+  width: $width;
+  height: 120px;
+  // border: 1px solid white;
+  // background-color: #fff4;
+  overflow: hidden;
+}
+
+.panel::before {
+  position: absolute;
+  left: var(--left);
+  content: 'Animated Text In CSS Is Fun';
+  font-size: 86px;
+  width: max-content;
+  color: hsl(var(--hue), 75%, 75%);
+}
+
+/* Use SASS for-loop to add value to different CSS custom properties for each one of our panels (we have 24) */
+
+/*--left: we move the content from each panel to the first panel,
+  we take width and times that with the panel number and multiply that 
+  with -1 to get the negative number */
+
+/*--hue: we set the hue value for each panel based on the panel no 
+  we take the 360 degrees of the hsl divide it by the number of panels and 
+  multiply that with the panel number*/
+
+/*--angle: Used to wrap the panels around the center of the view point 
+    calculated like the hue*/
+
+@for $i from 0 to 24 {
+  .panel:nth-child(#{$i + 1}) {
+    --left: #{$width * $i * -1};
+    --hue: #{360 / 24 * $i};
+    --angle: #{360deg /24 * $i};
+  }
+}
+
+.screen {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background-image: linear-gradient(90deg, #000a, #0004, #000a);
+  transform: translate(-50%, -50%);
 }
